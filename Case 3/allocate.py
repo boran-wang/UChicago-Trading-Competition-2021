@@ -32,7 +32,9 @@ current_weight = compute_starting_weights(past_prices)
 #the actual thing I need to work on
 def allocate_portfolio(new_prices):
     global past_prices
-    past_prices = past_prices.append(new_prices)
+    new_prices = pd.Series(new_prices,index=past_prices.columns)
+    past_prices = past_prices.append(new_prices,ignore_index=True)
+
     past_returns = past_prices.pct_change().dropna()
     past_prices = past_prices[1:]
     #compute the mean_vector and cov_matrix
